@@ -1,9 +1,11 @@
+const fs = require('fs')
 const process = require('process')
 const path = require('path')
 const util = require('util')
 
 const exec = util.promisify(require('child_process').exec)
-const writeFile = util.promisify(require('fs').writeFile)
+const writeFile = util.promisify(fs.writeFile)
+const exists = util.promisify(fs.exists)
 
 const deps = ['prettier', 'husky', 'lint-staged']
 
@@ -22,18 +24,16 @@ const initPrettier = async (params) => {
     const cwd = process.cwd();
     const packageJsonPath = path.resolve(cwd, 'package.json')
 
-    let packageJson
-
-    try {
-        packageJson = require(packageJsonPath)        
-    } catch {
+    if (!await exists(packageJsonPath)) {
         throw new Error('package.json do not exist in this folder')
     }
 
-    await exec(`npm i -D ${deps.map(d => d + '@latest').join(' ')}`)
+    const command = `npm i -D ${deps.map(d => d + '@latest').join(' ')}`
+
+    await exec(command)
 
     await writeFile(packageJsonPath,
-        JSON.stringify({ ...packageJson, ...toAdd }, null, 2)
+        JSON.stringify({ ...require(packageJsonPath), ...toAdd }, null, 2)
     )
 }
 
