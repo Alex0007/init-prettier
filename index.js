@@ -7,7 +7,7 @@ const exec = util.promisify(require('child_process').exec)
 const writeFile = util.promisify(fs.writeFile)
 const exists = util.promisify(fs.exists)
 
-const deps = ['prettier', 'husky', 'lint-staged']
+const deps = ['prettier@latest', 'husky@next', 'lint-staged@latest']
 
 const toAdd = {
     "husky": {
@@ -28,7 +28,7 @@ const initPrettier = async (params) => {
         throw new Error('package.json do not exist in this folder')
     }
 
-    const command = `npm i -D ${deps.map(d => d + '@latest').join(' ')}`
+    const command = `npm i -D ${deps.join(' ')}`
 
     await exec(command)
 
