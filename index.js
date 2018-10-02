@@ -7,7 +7,7 @@ const exec = util.promisify(require('child_process').exec)
 const writeFile = util.promisify(fs.writeFile)
 const exists = util.promisify(fs.exists)
 
-const deps = ['prettier@latest', 'husky@next', 'lint-staged@latest']
+const deps = ['prettier@latest', 'husky@latest', 'lint-staged@latest']
 
 const toAdd = {
     "husky": {
