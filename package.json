@@ -1,6 +1,6 @@
 {
   "name": "init-prettier",
-  "version": "1.0.4",
+  "version": "1.0.5",
   "description": "Sets up git hook with Prettier (via husky and lint-staged)",
   "main": "index.js",
   "bin": "bin.js",
